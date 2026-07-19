@@ -19,8 +19,8 @@ void draw(struct SDL *sdl, struct game *game)
 		draw_mem_snake(sdl, &game->snake);
 	}
 
-	draw_snake(sdl, &game->snake);
 	draw_food(sdl, &game->food);
+	draw_snake(sdl, &game->snake);
 
 	if (game->flags.draw_grid)
 	{

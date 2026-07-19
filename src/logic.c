@@ -6,6 +6,7 @@
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+// snake.c ?
 static int snake_direction_change(struct events *events, struct game *game)
 {
 	int ret = 0;
@@ -65,7 +66,7 @@ void logic(struct events *events, struct game *game)
 				static uint32_t last_update = 0;
 				uint32_t now = SDL_GetTicks();
 
-				if (now - last_update >= 150) // 150 ms = (1000 / 150) updates/sec
+				if (now - last_update >= 200) // 200 ms = 5 updates/sec
 				{
 					game_step(events, game);
 

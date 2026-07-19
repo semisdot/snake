@@ -31,17 +31,12 @@ void game_step(struct events *events, struct game *game)
 	next_head.row = snake->segments[snake->head].row + snake->dir_y;
 	next_head.col = snake->segments[snake->head].col + snake->dir_x;
 
-	if (snake_max_size(snake))
-	{
-		game_state_update(events, game, END);
-		return;
-	}
-
 	if (grid_collision(&next_head))
 	{
 		if (game->flags.grid_collision)
 		{
 			game_state_update(events, game, END);
+			// printf("GRID COLLISION\n");
 			return;
 		}
 		else
@@ -55,13 +50,23 @@ void game_step(struct events *events, struct game *game)
 	if (snake_collision(&game->grid, &next_head, &curr_tail))
 	{
 		game_state_update(events, game, END);
+		// printf("SNAKE COLLISION\n");
 		return;
 	}
 
 	if (food_collision(&game->grid, &next_head))
 	{
 		snake->size += 1;
-		init_food(&game->grid, &game->food);
+
+		if (snake_max_size(snake))
+		{
+			game_state_update(events, game, END);
+			// printf("SNAKE MAX SIZE\n");
+		}
+		else
+		{
+			init_food(&game->grid, &game->food);
+		}
 	}
 	else
 	{

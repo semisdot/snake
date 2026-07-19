@@ -15,12 +15,19 @@ void init_game(struct game *game)
 	init_food(&game->grid, &game->food);
 }
 
+// TODO
 void init_food(struct grid *grid, struct food *food)
 {
+	static int counter;
+
+	counter = 0;
+
 	while (1)
 	{
 		food->apple.row = rand() % GRID_ROWS;
 		food->apple.col = rand() % GRID_COLUMNS;
+
+		counter += 1;
 
 		if (grid->cells[food->apple.row][food->apple.col] == EMPTY)
 		{
@@ -28,7 +35,8 @@ void init_food(struct grid *grid, struct food *food)
 		}
 	}
 
-	// TODO
+	// printf("INIT FOOD (%d)\n", counter);
+
 	grid->cells[food->apple.row][food->apple.col] = FOOD;
 }
 
