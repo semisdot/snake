@@ -15,29 +15,60 @@ void init_game(struct game *game)
 	init_food(&game->grid, &game->food);
 }
 
-// TODO
-void init_food(struct grid *grid, struct food *food)
+int init_food(struct grid *grid, struct food *food)
 {
-	static int counter;
+	int ret = 0;
 
-	counter = 0;
+	int row, col;
+	int row_i, col_i;
+	int row_list[GRID_ROWS];
+	int col_list[GRID_COLUMNS];
+	int row_list_size;
+	int col_list_size;
+	int i, j;
 
-	while (1)
+	row_list_size = GRID_ROWS;
+
+	for (i = 0; i < row_list_size; ++i)
 	{
-		food->apple.row = rand() % GRID_ROWS;
-		food->apple.col = rand() % GRID_COLUMNS;
-
-		counter += 1;
-
-		if (grid->cells[food->apple.row][food->apple.col] == EMPTY)
-		{
-			break;
-		}
+		row_list[i] = i;
 	}
 
-	// printf("INIT FOOD (%d)\n", counter);
+	do
+	{
+		row_i = rand() % row_list_size;
+		row = row_list[row_i];
 
-	grid->cells[food->apple.row][food->apple.col] = FOOD;
+		col_list_size = 0;
+
+		for (j = 0; j < GRID_COLUMNS; ++j)
+		{
+			if (grid->cells[row][j] == EMPTY)
+			{
+				col_list[col_list_size++] = j;
+			}
+		}
+
+		if (col_list_size)
+		{
+			col_i = rand() % col_list_size;
+			col = col_list[col_i];
+
+			food->apple.row = row;
+			food->apple.col = col;
+
+			grid->cells[row][col] = FOOD;
+
+			ret = 1;
+			break;
+		}
+
+		row_list[row_i] = row_list[row_list_size - 1];
+		row_list_size -= 1;
+	}
+	while (row_list_size);
+
+	return ret;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

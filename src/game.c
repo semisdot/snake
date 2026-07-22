@@ -58,6 +58,14 @@ void game_step(struct events *events, struct game *game)
 	{
 		snake->size += 1;
 
+#if 0
+		if (!init_food(&game->grid, &game->food))
+		{
+			game_state_update(events, game, END);
+			// printf("SNAKE MAX SIZE\n");
+		}
+#endif
+
 		if (snake_max_size(snake))
 		{
 			game_state_update(events, game, END);

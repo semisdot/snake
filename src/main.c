@@ -29,6 +29,8 @@ int main(void)
 	game.flags.draw_mem_snake = 0;
 	game.flags.draw_grid	  = 0;
 
+	// game.snake.speed // ?
+
 	game_state_update(&events, &game, BEGINNING);
 
 	while (1)
